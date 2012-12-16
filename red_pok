@@ -1,0 +1,46 @@
+struct osoba{
+    char ime[30];
+    char prezime[35];
+    short int dan,misec,godina;
+    float trac,drac;
+    int a11,b11,c11,d11;
+};
+
+struct re_a {
+osoba ins;
+re_a *slje;
+};
+
+struct nes{
+    re_a *pred,*zad;};
+nes red,reda;
+
+osoba FrontQ (nes red) {
+      return ((red.pred)->slje)->ins;;
+}
+
+void EnQueueQ (osoba a,nes &red) {
+     re_a *dod=new re_a;
+     dod->ins=a;
+     dod->slje=NULL;
+     (red.zad)->slje=dod;
+     red.zad=dod;
+}
+
+void DeQueueQ (nes &red) {
+     re_a *brisi=red.pred;
+     red.pred=(red.pred)->slje;
+     delete brisi;
+}
+
+bool IsEmptyQ (nes red) {
+     if (red.zad==red.pred) return true;
+     return false;
+}
+
+void InitQ (nes &red) {
+     re_a *nov=new re_a;
+     nov->slje=NULL;
+     red.zad=nov;
+     red.pred=nov;
+}
