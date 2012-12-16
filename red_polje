@@ -1,0 +1,40 @@
+struct osoba{
+    char ime[30];
+    char prezime[35];
+    short int dan,misec,godina;
+    float trac,drac;
+    int a11,b11,c11,d11;
+};
+
+struct re {
+osoba ins[1000];
+int pred, zad;
+};
+
+re red;
+re reda;
+
+int AddOne (int n) {
+    return ((n+1)%1000);}
+    
+osoba FrontQ (re red) {
+return red.ins[red.pred];}
+
+void EnQueueQ (osoba a, re &red){
+red.zad=AddOne(red.zad);
+red.ins[red.zad]=a;}
+
+
+void DeQueueQ (re &red){
+red.pred=AddOne(red.pred);}
+
+
+bool IsEmptyQ (re red){
+     if (AddOne(red.zad)==red.pred) return true;
+     return false;}
+     
+     
+void InitQ (re &red){
+red.pred=0;
+red.zad=999;}
+
