@@ -1,0 +1,342 @@
+#include <iostream>f
+#include <ctime>
+#include <cstring>
+#include <cstdlib>
+//#include "redpolje.h"
+#include "red_pok.h"
+using namespace std;
+int bizb=0;
+float yen=0.068;
+int belem;
+int a1=0;
+int b1=0;
+int ba=0,bb=0,bc=0,bd=0;
+int krug=0;
+void nor(){
+    srand(time(0));
+    rand();
+    cout<<"Broj elementa koji zelite "<<endl;
+    cin>>belem;
+    int broj=belem;
+    int belem1=belem*4-1;
+    cout<<"Polje je veličine: ";
+    int *polje=new int[belem1];
+    for (int i=0;i<belem1;i=i+4){
+        polje[i]=rand()%400+100;
+        polje[i+1]=rand()%400+100;
+        polje[i+2]=rand()%6+1;
+        if(polje[i+2]==6)
+            while(1){
+                polje[i+3]=rand()%4+1;
+                if  (polje[i+3]==3|| polje[i+3]==1)break;}
+        else
+        polje[i+3]=rand()%4+1;
+        if (polje[i+3]==1) ba++;
+        else if (polje[i+3]==2) bb++;
+        else if (polje[i+3]==3) bc++;
+        else if (polje[i+3]==4) bd++;
+    cout<<"=";
+        }
+    for(int i=0;i<belem1;i++)
+    cout<<polje[i]<<",";
+    cout<<endl;
+    cout<<"------------------"<<endl;
+    osoba pomocno;
+    int vrijeme_sal=0;
+    int i=0;
+    do{
+    pomocno.a11=polje[i];
+    pomocno.b11=polje[i+1];
+    pomocno.c11=polje[i+2];
+    pomocno.d11=polje[i+3];
+    i=i+4;
+    broj=broj-1;
+    cout<<"do sada elementi reda:"<<endl;
+    EnQueueQ(pomocno,red);
+    }while(broj);
+    cout<<"Izgled reda: "<<endl;
+    for (int i=0;i<belem;i++){
+        osoba ispis=FrontQ(red);
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        DeQueueQ(red);
+        EnQueueQ(ispis,red);
+   }
+    }
+void add_info(){
+    osoba data;
+    for (int i=0;i<belem;i++){
+    data=FrontQ(red);
+    DeQueueQ(red);
+    cin.ignore();
+    cout<<"Unesite ime i prez. osobe"<<endl;
+    cin.getline(data.ime,25);
+    cin.getline(data.prezime,30);
+    cout<<"Datume rodenja DD/MM/GG "<<endl;
+    cin>>data.dan;
+    cin>>data.misec;
+    cin>>data.godina;
+    cout<<"Unesite stanje na tekucem racunu Kunama"<<endl;
+    cin>>data.trac;
+    cout<<"Unesite stanje na deviznom racunu "<<endl;
+    cin>>data.drac;
+    EnQueueQ(data,red);}
+    system("cls");
+    cout<<"Ispis svih klijenata:"<<endl;
+    osoba polje[belem];
+    for(int i=0;i<belem;i++){
+    if(!IsEmptyQ(red)){
+    polje[i]=FrontQ(red);
+    DeQueueQ(red);
+    }}
+     bool zamjena=true;
+     for(int i=belem-1;i>0&&zamjena; i--){
+         zamjena=false;
+         for(int j=0;j<i;j++){
+                 if(polje[j].c11>polje[j+1].c11){
+                 osoba pomocno=polje[j];
+                 polje[j]=polje[j+1];
+                 polje[j+1]=pomocno;
+                zamjena=true;
+     }
+     if(polje[j].c11==polje[j+1].c11){
+         if(polje[j].a11>polje[j+1].a11){
+             osoba pomocno=polje[j];
+             polje[j]=polje[j+1];
+             polje[j+1]=pomocno;
+             zamjena=true;
+         }
+         }
+     }
+     }
+     for(int i=0;i<belem;i++)
+     EnQueueQ(polje[i],red);
+    for (int i=0;i<belem;i++){
+    cout<<"-------"<<endl;
+    osoba ispis=FrontQ(red);
+        cout<<"Ime "<<ispis.ime<<endl;
+        cout<<"Prezime "<<ispis.prezime<<endl;
+        cout<<"Datum rodenja "<<ispis.dan<<"."<<ispis.misec<<"."<<ispis.godina<<endl;
+        cout<<"Stanje na deviznom racunu "<<ispis.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem racunu "<<ispis.trac<<" KN"<<endl;
+        cout<<endl;
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        DeQueueQ(red);
+        EnQueueQ(ispis,red);}
+    }
+    
+    
+    
+void add_info_10(){
+    system("cls");
+    cout<<"Ispsi klijenata s vise od 10000 na dev.rac¸¸unu"<<endl;
+    for (int i=0;i<belem;i++){
+    osoba out=FrontQ(red);
+    DeQueueQ(red);
+    if (out.drac*yen>=10000){
+        cout<<"Ime "<<out.ime<<endl;
+        cout<<"Prezime "<<out.prezime<<endl;
+        cout<<"Dan rodenja "<<out.dan<<endl;
+        cout<<"Mjesc rodenja "<<out.misec<<endl;
+        cout<<"Godina rodenja "<<out.godina<<endl;
+        cout<<"Tekuci racun "<<out.trac<<endl;
+        cout<<"Devizni racun "<<out.drac<<endl;
+        cout<<"Devizni racun kn "<<out.drac*yen<<endl;
+        cout<<out.a11<<endl;
+        cout<<out.b11<<endl;
+        cout<<out.c11<<endl;
+        cout<<out.d11<<endl;
+        }
+    EnQueueQ(out,red);}
+
+    }
+void test()
+{
+    for (int i=0;i<belem;i++){
+    cout<<"----------------------------------"<<endl;
+    osoba ispis=FrontQ(red);
+        cout<<"Ime "<<ispis.ime<<endl;
+        cout<<"Prezime "<<ispis.prezime<<endl;
+        cout<<"Datum rodenj  "<<ispis.dan<<endl;
+        cout<<"Mjesec rodanje "<<ispis.misec<<endl;
+        cout<<"Godina rodenja "<<ispis.godina<<endl;
+        cout<<"Stanje na deviznom rac "<<ispis.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem rac "<<ispis.trac<<" KN"<<endl;
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        DeQueueQ(red);
+        EnQueueQ(ispis,red);}}
+void fast_trans(){
+    osoba out3;
+    for (int i=0;i<belem;i++){
+    out3=FrontQ(red);
+    DeQueueQ(red);
+    if (out3.d11==3) {EnQueueQ(out3,reda); bizb++;}
+    else EnQueueQ(out3,red);}
+    }
+    
+    
+void fast_trans_print(){
+    osoba out2;
+    int pomocno=bizb;
+    while(pomocno>0){
+        pomocno--;
+        out2=FrontQ(reda);
+        DeQueueQ(reda);
+        cout<<"Ime "<<out2.ime<<endl;
+        cout<<"Prezime "<<out2.prezime<<endl;
+        cout<<"Datum rodenja "<<out2.dan<<endl;
+        cout<<"Mjesec rodenja "<<out2.misec<<endl;
+        cout<<"Godina rodenja "<<out2.godina<<endl;
+        cout<<"Tekuci racun "<<out2.trac<<endl;
+        cout<<"Devizni racun "<<out2.drac<<endl;
+        cout<<"Devizni racun pretvoren u kune "<<out2.drac*yen<<endl;
+        cout<<out2.a11<<endl;
+        cout<<out2.b11<<endl;
+        cout<<out2.c11<<endl;
+        cout<<out2.d11<<endl;
+        EnQueueQ(out2,reda);
+        }}
+        
+        
+void org_queue(){
+    cout<<"Originali stog stanje"<<endl;
+
+    for (int i=0;i<belem-bizb;i++){
+    cout<<"---------------"<<endl;
+    osoba ispis=FrontQ(red);
+        cout<<"Ime "<<ispis.ime<<endl;
+        cout<<"Prezime "<<ispis.prezime<<endl;
+        cout<<"Datum rodenj "<<ispis.dan<<". "<<ispis.misec<<". "<<ispis.godina<<endl;
+        cout<<"Stanje na deviznom racunu "<<ispis.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem racunu "<<ispis.trac<<" KN"<<endl;
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        DeQueueQ(red);
+        EnQueueQ(ispis,red);} }
+        
+void del_vip(){
+    osoba ispis;
+    for(int i=0;i<belem-bizb;i++){
+        ispis=FrontQ(red);
+        DeQueueQ(red);
+        if((ispis.godina>1982&&ispis.trac<100)||(ispis.c11==3&&ispis.d11==1&&ispis.trac+ispis.drac>5000)){
+        cout<<"Ime "<<ispis.ime<<endl;
+        cout<<"Prezime "<<ispis.prezime<<endl;
+        cout<<"Dan rodenja "<<ispis.dan<<endl;
+        cout<<"Mjsec rodenja "<<ispis.misec<<endl;
+        cout<<"Godina rodenja "<<ispis.godina<<endl;
+        cout<<"Stanje na deviznom racunu "<<ispis.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem racunu "<<ispis.trac<<" KN"<<endl;
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        a1++;
+            }
+        else EnQueueQ(ispis,red);}}
+        
+        
+void after_vip(){
+    osoba ispis;
+    for(int i=0;i<belem-bizb-a1;i++){
+        ispis=FrontQ(red);
+        DeQueueQ(red);
+        cout<<"Prezime "<<ispis.prezime<<endl;
+        cout<<"Datum rodenja "<<ispis.dan<<"."<<ispis.misec<<"."<<ispis.godina<<endl;
+        cout<<"Stanje na deviznom racunu "<<ispis.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem racunu "<<ispis.trac<<" KN"<<endl;
+        cout<<"a11:"<<ispis.a11<<endl;
+        cout<<"b11:"<<ispis.b11<<endl;
+        cout<<"c11:"<<ispis.c11<<endl;
+        cout<<"d11:"<<ispis.d11<<endl;
+        cout<<endl;
+        EnQueueQ(ispis,red);
+            }
+    }
+    
+    
+void rekurzija(){
+    osoba rekurzivni;
+    if(IsEmptyQ(red)){cout<<"iskrcaj gotov"<<endl;return;}
+    else{
+
+    rekurzivni=FrontQ(red);
+    DeQueueQ(red);
+
+    if(krug>0){
+        krug--;
+        cout<<"Prezime "<<rekurzivni.prezime<<endl;
+        cout<<"Datum rodenja "<<rekurzivni.dan<<"."<<rekurzivni.misec<<"."<<rekurzivni.godina<<endl;
+        cout<<"Stanje na deviznom racunu "<<rekurzivni.drac<<" YEN"<<endl;
+        cout<<"Stanje na tekucem racunu "<<rekurzivni.trac<<" KN"<<endl;
+        cout<<"a11:"<<rekurzivni.a11<<endl;
+        cout<<"b11:"<<rekurzivni.b11<<endl;
+        cout<<"c11:"<<rekurzivni.c11<<endl;
+        cout<<"d11:"<<rekurzivni.d11<<endl;
+        rekurzija();}
+    else{
+        rekurzija();
+        EnQueueQ(rekurzivni,red);
+        }}}
+int main(){
+    int izbor;
+    InitQ(red);
+    InitQ(reda);
+
+    do{
+       cout<<"IZBORNIK"<<endl;
+       cout<<" 1 za: unos broja klijenata"<<endl;
+       cout<<" 2 za: unos informacija o klijentu"<<endl;
+       cout<<" 3 za: devizne racune >10 000kn"<<endl;
+       cout<<" 4 za: otvaranje brzih transkacija"<<endl;
+       cout<<" 5 za: ispis klijenata u redu brzih tranakcija"<<endl;
+       cout<<" 6 za: ispis klijenata u glavnom redu"<<endl;
+       cout<<" 7 za: brisanje vip klijenata i umirovljenika"<<endl;
+       cout<<" 8 za: novi salter"<<endl;
+       cout<<" 0 za: izlaz iz programa"<<endl;
+        cout<<"Izbor"<<endl;
+        cin>>izbor;
+        b1=belem-bizb-a1;
+         krug=b1*0.3;
+        switch(izbor){
+            case 1:nor();
+                  break;
+            case 2:add_info();
+                  break;
+            case 3:add_info_10();
+                  break;
+            case 4:fast_trans();
+                  break;
+            case 5:fast_trans_print();
+                  break;
+            case 6:org_queue();
+                  break;
+            case 7:del_vip();
+                  system("pause");
+                  cout<<"Stanje na kraju"<<endl;after_vip();
+                  break;
+            case 8:rekurzija();
+                  break;}
+            default: cout<<"Unos nije ispravan!"<<endl;
+                  break;
+
+    }while(izbor!=0);
+
+
+
+}
